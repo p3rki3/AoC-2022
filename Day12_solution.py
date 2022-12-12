@@ -2,10 +2,10 @@ from collections import deque
 from itertools import product
 import AoCFramework as AoC
 
-def path_search(part):
+def path_search(part):   # breadth first search
     S, Q = set(), deque()
     for n, l in product(range(Numlines), range(Lenline)):
-        if (part == 1 and Board[n][l] == 0) or (part == 2 and Board[n][l] < 2):
+        if Board[n][l] < part:     # for part 1, we need Board = 0, for part 2, we need Board = 1 or 0
             Q.append(((n, l), 0))
     while Q:
         (n, l), d = Q.popleft()
@@ -19,7 +19,7 @@ def path_search(part):
             if 0 <= nn < Numlines and 0 <= ll < Lenline and Board[nn][ll] <= 1 + Board[n][l]:
                 Q.append(((nn, ll), d + 1))
 
-Lines, Numlines = AoC.Init("data/day12.txt", nolines=False, isnumlist=False, printme=False)
+Lines, Numlines = AoC.Init("data/day12.txt")
 Lenline = len(Lines[0])
 Board = [ [ 0 for _i in range(Lenline) ] for _j in range(Numlines) ]
 for n, l in product(range(Numlines), range(Lenline)):
